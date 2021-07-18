@@ -17,8 +17,7 @@ const config = {
 	themeConfig: {
 		codemirrorTheme: 'material',
 		logo: {
-			src:
-				'https://user-images.githubusercontent.com/10063864/45445171-7d1a6980-b697-11e8-9052-22f7b3c36e94.png',
+			src: './public/avataaars.png',
 			width: 232,
 		},
 		colors: {
@@ -29,15 +28,6 @@ const config = {
 			body: {
 				fontFamily: "'Montserrat', Helvetica Neue, Arial, sans",
 				fontSize: 16,
-			},
-			h1: {
-				fontFamily: "'Kadwa'",
-			},
-			h2: {
-				fontFamily: "'Kadwa'",
-			},
-			h3: {
-				fontFamily: "'Kadwa'",
 			},
 			logo: {
 				background: 'transparent',

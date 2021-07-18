@@ -76,7 +76,7 @@ export default function BCRAvatar({
 	network,
 	address,
 	className = '',
-	placeholder = '../../assets/images/avataaars.png',
+	placeholder = 'https://raw.githubusercontent.com/Crypto-Utilitybia/react-bcravatar/master/.github/images/placeholder.png',
 	children,
 	...props
 }) {

@@ -13,8 +13,7 @@ function fetchAvatar(address, network, web3) {
 					avatars(where: { id: "${address.toLowerCase()}" }) {
 						id,
 						uri,
-						nft,
-						tokenId
+						hasNFT
 					}
 				}`,
 			}),
@@ -23,7 +22,7 @@ function fetchAvatar(address, network, web3) {
 			.then(({ data: { avatars } }) => avatars[0])
 			.then((avatar) => {
 				if (avatar) {
-					if (avatar.nft) {
+					if (avatar.hasNFT) {
 						const contract = new web3.eth.Contract(
 							contractABI,
 							contracts[network]
@@ -31,13 +30,25 @@ function fetchAvatar(address, network, web3) {
 						contract.methods
 							.getAvatar(address)
 							.call()
-							.then((uri) => resolve[(uri, avatar.uri !== uri)])
-							.catch(reject);
+							.then((uri) => {
+								fetch(uri)
+									.then((response) => response.json())
+									.then((metadata) => {
+										if (metadata.image || metadata.image_url) {
+											const uri = metadata.image || metadata.image_url;
+											resolve([uri, avatar.uri !== uri]);
+										} else {
+											resolve([avatar.uri, false]);
+										}
+									})
+									.catch(() => resolve([avatar.uri, false]));
+							})
+							.catch(() => resolve([avatar.uri, false]));
 					} else {
 						resolve([avatar.uri, false]);
 					}
 				} else {
-					reject({ msg: 'No Avatar' });
+					reject({ error: 'No Avatar' });
 				}
 			})
 			.catch(reject)
@@ -62,7 +73,7 @@ export function useBCRAvatar({ infura, network, address }) {
 	}, [infura, network]);
 
 	useEffect(() => {
-		if (!address || !subgraphs[network]) return;
+		if (!address || !web3) return;
 		fetchAvatar(address, network, web3)
 			.then(setAvatar)
 			.catch((err) => console.log('Error: Fetch Avatar', err));
@@ -76,7 +87,7 @@ export default function BCRAvatar({
 	network,
 	address,
 	className = '',
-	placeholder = 'https://raw.githubusercontent.com/Crypto-Utilitybia/react-bcravatar/master/.github/images/placeholder.png',
+	placeholder = 'https://ipfs.io/ipfs/QmVaFasJTocvnuEobz7HkRpADB82z5gYA2xuZrgYFmMoQz',
 	children,
 	...props
 }) {
@@ -89,7 +100,9 @@ export default function BCRAvatar({
 
 	return (
 		<div className={classes.join(' ')} {...props}>
-			<img className="bcravatar__image" src={ placeholder} />
+			<a href="https://www.bcravatar.com" target="_blank">
+				<img className="bcravatar__image" src={avatar || placeholder} />
+			</a>
 			<div className="bcravatar__content">{children}</div>
 		</div>
 	);

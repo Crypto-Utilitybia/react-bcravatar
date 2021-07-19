@@ -53,7 +53,6 @@ export default function BCRProfileExample({
 	address,
 	className = '',
 	placeholder = 'https://ipfs.io/ipfs/QmVaFasJTocvnuEobz7HkRpADB82z5gYA2xuZrgYFmMoQz',
-	children,
 	...props
 }) {
 	const [profile, error] = useBCRProfile({

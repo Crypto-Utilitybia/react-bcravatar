@@ -20,15 +20,11 @@ const shorten = (addr) => `${addr.substr(0, 6)}...${addr.substr(-4)}`;
 storiesOf('BCRProfile')
 	.add('with profile', () => (
 		<Wrapper>
-			<BCRProfile infura={INFURA_ID} network={4} address={address1}>
-				{shorten(address1)}
-			</BCRProfile>
+			<BCRProfile infura={INFURA_ID} network={4} address={address1} />
 		</Wrapper>
 	))
 	.add('without profile', () => (
 		<Wrapper>
-			<BCRProfile infura={INFURA_ID} network={4} address={address2}>
-				{shorten(address2)}
-			</BCRProfile>
+			<BCRProfile infura={INFURA_ID} network={4} address={address2} />
 		</Wrapper>
 	));

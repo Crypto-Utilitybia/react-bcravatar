@@ -7,18 +7,24 @@
     "build-storybook": "build-storybook -s public",
     "storybook": "start-storybook -s ./public -p 9001",
     "deploy-storybook": "storybook-to-ghpages",
-    "deploy": "npm run deploy-storybook -- --out=.out --source-branch=main"
+    "deploy": "npm run deploy-storybook -- --out=.out --source-branch=main",
+    "publish": "npm run deploy && npm publish --public"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cwlsn/react-bcravatar.git"
   },
   "keywords": [
-    "boilerplate",
+    "bcravatar",
     "react",
-    "shared",
-    "components",
-    "components"
+    "compoennts",
+    "avatar",
+    "blockchain",
+    "web3",
+    "nft",
+    "ethereum",
+    "rinkeby",
+    "ploygon"
   ],
   "author": "Connor Wilson",
   "license": "MIT",

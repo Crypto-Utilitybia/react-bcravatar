@@ -35,7 +35,7 @@ const shorten = (addr) => `${addr.substr(0, 6)}...${addr.substr(-4)}`;
 storiesOf('BCRAvatar')
 	.add('with image', () => (
 		<Wrapper>
-			<img id="logo" src="/crypto-utilitybia.png" alt="Crypto Utilitybia" />
+			<img id="logo" src="https://raw.githubusercontent.com/Crypto-Utilitybia/react-bcravatar/main/public/crypto-utilitybia.png" alt="Crypto Utilitybia" />
 			<BCRAvatar infura={INFURA_ID} network={4} address={address1}>
 				{shorten(address1)}
 			</BCRAvatar>
@@ -43,7 +43,7 @@ storiesOf('BCRAvatar')
 	))
 	.add('with nft', () => (
 		<Wrapper>
-			<img id="logo" src="/crypto-utilitybia.png" alt="Crypto Utilitybia" />
+			<img id="logo" src="https://raw.githubusercontent.com/Crypto-Utilitybia/react-bcravatar/main/public/crypto-utilitybia.png" alt="Crypto Utilitybia" />
 			<BCRAvatar infura={INFURA_ID} network={4} address={address2}>
 				{shorten(address2)}
 			</BCRAvatar>

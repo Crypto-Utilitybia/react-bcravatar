@@ -68,7 +68,11 @@ export function useBCRAvatar({ infura, network, address }) {
 		if (web3) {
 			web3.setProvider(provider);
 		} else {
-			setWeb3(new (require('web3'))(provider));
+			import('web3')
+				.then(({ default: Web3 }) => {
+					setWeb3(new Web3(provider));
+				})
+				.catch((error) => 'An error occurred while loading Web3');
 		}
 	}, [infura, network]);
 

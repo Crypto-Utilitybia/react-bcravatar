@@ -18,14 +18,14 @@ const address2 = '0x543812C87700377b7b6D943142Cb57b1b4a05624';
 const shorten = (addr) => `${addr.substr(0, 6)}...${addr.substr(-4)}`;
 
 storiesOf('BCRProfile')
-	.add('with image', () => (
+	.add('with profile', () => (
 		<Wrapper>
 			<BCRProfile infura={INFURA_ID} network={4} address={address1}>
 				{shorten(address1)}
 			</BCRProfile>
 		</Wrapper>
 	))
-	.add('with nft', () => (
+	.add('without profile', () => (
 		<Wrapper>
 			<BCRProfile infura={INFURA_ID} network={4} address={address2}>
 				{shorten(address2)}

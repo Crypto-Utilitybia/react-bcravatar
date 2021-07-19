@@ -7,7 +7,7 @@
     "build-storybook": "build-storybook -s public",
     "storybook": "start-storybook -s ./public -p 9001",
     "deploy-storybook": "storybook-to-ghpages",
-    "deploy": "npm run deploy-storybook -- --out=.out"
+    "deploy": "npm run deploy-storybook -- --out=.out --source-branch=main"
   },
   "repository": {
     "type": "git",

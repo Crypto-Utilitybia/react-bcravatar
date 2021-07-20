@@ -16,10 +16,7 @@ function BCRProfileExample({
 	placeholder = 'https://ipfs.io/ipfs/QmVaFasJTocvnuEobz7HkRpADB82z5gYA2xuZrgYFmMoQz',
 	...props
 }) {
-	const [profile, error] = useBCRProfile({
-		network,
-		address,
-	});
+	const [profile, error] = useBCRProfile(network, address);
 	const loading = !profile && !error;
 	const classes = [error ? 'bcrprofile error' : 'bcrprofile', className];
 

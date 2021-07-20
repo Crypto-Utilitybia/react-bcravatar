@@ -56,7 +56,7 @@ export function fetchAvatar(address, network, web3) {
 	);
 }
 
-export function useBCRAvatar({ Web3, infura, network, address }) {
+export function useBCRAvatar(Web3, infura, network, address) {
 	const [web3, setWeb3] = useState(null);
 	const [avatar, setAvatar] = useState([null, false]);
 
@@ -93,12 +93,7 @@ export function BCRAvatar({
 	children,
 	...props
 }) {
-	const [avatar, isNFT] = useBCRAvatar({
-		Web3,
-		infura,
-		network,
-		address,
-	});
+	const [avatar, isNFT] = useBCRAvatar(Web3, infura, network, address);
 	const classes = [
 		isNFT ? 'bcravatar is-nft' : 'bcravatar',
 		styles.bcravatar,
@@ -149,7 +144,7 @@ export function fetchProfile(address, network) {
 	);
 }
 
-export function useBCRProfile({ network, address }) {
+export function useBCRProfile(network, address) {
 	const [profile, setProfile] = useState([null, null]);
 
 	useEffect(() => {

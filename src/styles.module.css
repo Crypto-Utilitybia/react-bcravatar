@@ -1,0 +1,11 @@
+.bcravatar {
+  display: flex;
+  align-items: center;
+}
+
+.bcravatar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}

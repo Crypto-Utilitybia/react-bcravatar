@@ -1,9 +1,11 @@
-/* add css module styles here (optional) */
+.bcravatar {
+  display: flex;
+  align-items: center;
+}
 
-.test {
-  margin: 2em;
-  padding: 0.5em;
-  border: 2px solid #000;
-  font-size: 2em;
-  text-align: center;
+.bcravatar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
 }

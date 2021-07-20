@@ -12,3 +12,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.avatar-wrapper {
+  display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	box-shadow: 1px 1px 3px;
+}
+#logo {
+  height: 30px;
+}
+
+.profile-wrapper {
+  margin: 10px 20px;
+  box-shadow: 1px 1px 3px;
+}
+.bcrprofile {
+  padding: 10px 20px;
+}

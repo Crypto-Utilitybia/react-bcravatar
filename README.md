@@ -1,51 +1,30 @@
-## React Component for [BCRAvatar](https://bcravatar.com/)
+# react-bcravatar
 
-- [Storybook](https://crypto-utilitybia.github.io/react-bcravatar)
+> React components/hooks for BCRAvatar
 
-## How to use BCRAvatar
+[![NPM](https://img.shields.io/npm/v/react-bcravatar.svg)](https://www.npmjs.com/package/react-bcravatar) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-### BCRAvatar and useBCRAvatar
+## Install
 
-```javascript
-import { BCRAvatar } from 'react-bcravatar';
-///
-<BCRAvatar infura={INFURA_ID} network={4} address={address}>
-	{shorten(address)}
-</BCRAvatar>;
+```bash
+npm install --save react-bcravatar
 ```
 
-```javascript
-import { useBCRAvatar } from 'react-bcravatar';
-///
-const [avatar, isNFT] = useBCRAvatar({
-	infura,
-	network,
-	address,
-});
-///
-<div className={classes.join(' ')} {...props}>
-	<a href="https://www.bcravatar.com" target="_blank">
-		<img className="bcravatar__image" src={avatar || placeholder} />
-	</a>
-	<div className="bcravatar__content">{children}</div>
-</div>;
+## Usage
+
+```jsx
+import React, { Component } from 'react'
+
+import MyComponent from 'react-bcravatar'
+import 'react-bcravatar/dist/index.css'
+
+class Example extends Component {
+  render() {
+    return <MyComponent />
+  }
+}
 ```
 
-### useBCRProfile
+## License
 
-```javascript
-import { useBCRProfile } from 'react-bcravatar';
-///
-const [profile, error] = useBCRProfile({
-	network,
-	address,
-});
-///
-<pre className={classes.join(' ')} {...props}>
-	{loading
-		? 'Loading...'
-		: error
-		? JSON.stringify(error, null, 4)
-		: JSON.stringify(profile, null, 4)}
-</pre>;
-```
+MIT © [Crypto-Utilitybia](https://github.com/Crypto-Utilitybia)

@@ -1,50 +1,53 @@
 {
   "name": "react-bcravatar",
-  "version": "1.0.1",
-  "description": "BlockChain Registered Avatar Components",
-  "main": "dist/index.js",
-  "scripts": {
-    "build-storybook": "build-storybook -s public",
-    "storybook": "start-storybook -s ./public -p 9001",
-    "deploy-storybook": "storybook-to-ghpages",
-    "deploy": "npm run deploy-storybook -- --out=.out --source-branch=main",
-    "publish": "npm run deploy && npm publish --public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cwlsn/react-bcravatar.git"
-  },
-  "keywords": [
-    "bcravatar",
-    "react",
-    "compoennts",
-    "avatar",
-    "blockchain",
-    "web3",
-    "nft",
-    "ethereum",
-    "rinkeby",
-    "ploygon"
-  ],
-  "author": "Connor Wilson",
+  "version": "1.0.0",
+  "description": "React components/hooks for BCRAvatar",
+  "author": "Crypto-Utilitybia",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cwlsn/react-bcravatar/issues"
+  "repository": "Crypto-Utilitybia/react-bcravatar",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.js",
+  "engines": {
+    "node": ">=10"
   },
-  "homepage": "https://github.com/cwlsn/react-bcravatar#readme",
+  "scripts": {
+    "build": "microbundle-crl --no-compress --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "prepare": "run-s build",
+    "test": "run-s test:unit test:lint test:build",
+    "test:build": "run-s build",
+    "test:lint": "eslint .",
+    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
+    "predeploy": "cd example && yarn install && yarn run build",
+    "deploy": "gh-pages -d example/build"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0"
+  },
   "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/preset-env": "^7.14.7",
-    "@babel/preset-react": "^7.14.5",
-    "@storybook/addon-actions": "^6.3.0",
-    "@storybook/react": "^6.3.0",
-    "@storybook/storybook-deployer": "^2.8.10",
-    "babel-loader": "^8.2.2",
-    "styled-components": "^4.4.1",
-    "web3": "^1.4.0"
+    "microbundle-crl": "^0.13.10",
+    "babel-eslint": "^10.0.3",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-config-standard-react": "^9.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "gh-pages": "^2.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1"
   },
-  "dependencies": {
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
-  }
+  "files": [
+    "dist"
+  ]
 }

@@ -7,21 +7,26 @@
 ## Install
 
 ```bash
-npm install --save react-bcravatar
+npm install --save react-bcravatar web3
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Web3 from 'web3';
 
-import MyComponent from 'react-bcravatar'
-import 'react-bcravatar/dist/index.css'
+import { BCRAvatar } from 'react-bcravatar';
+import 'react-bcravatar/dist/index.css';
 
 class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+	render() {
+		return (
+			<BCRAvatar Web3={Web3} infura={INFURA_ID} network={4} address={address}>
+				{shorten(address)}
+			</BCRAvatar>
+		);
+	}
 }
 ```
 

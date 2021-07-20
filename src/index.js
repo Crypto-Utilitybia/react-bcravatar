@@ -77,7 +77,10 @@ export function useBCRAvatar(Web3, infura, network, address) {
 		if (!address || !web3) return;
 		fetchAvatar(address, network, web3)
 			.then(setAvatar)
-			.catch((err) => console.log('Error: Fetch Avatar', err));
+			.catch((err) => {
+				console.log('Error: Fetch Avatar', err);
+				setAvatar('', false);
+			});
 	}, [address, network, web3]);
 
 	return avatar;

@@ -38,11 +38,7 @@ const App = () => {
 	return (
 		<div>
 			<div className="avatar-wrapper">
-				<img
-					id="logo"
-					src="https://raw.githubusercontent.com/Crypto-Utilitybia/react-bcravatar/main/public/crypto-utilitybia.png"
-					alt="Crypto Utilitybia"
-				/>
+				<img id="logo" src="/logo.png" alt="Crypto Utilitybia" />
 				<BCRAvatar
 					Web3={Web3}
 					infura={INFURA_ID}
@@ -56,11 +52,7 @@ const App = () => {
 				<BCRProfileExample infura={INFURA_ID} network={4} address={address1} />
 			</div>
 			<div className="avatar-wrapper">
-				<img
-					id="logo"
-					src="https://raw.githubusercontent.com/Crypto-Utilitybia/react-bcravatar/main/public/crypto-utilitybia.png"
-					alt="Crypto Utilitybia"
-				/>
+				<img id="logo" src="/logo.png" alt="Crypto Utilitybia" />
 				<BCRAvatar
 					Web3={Web3}
 					infura={INFURA_ID}

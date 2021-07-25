@@ -2,7 +2,7 @@
 
 > React components/hooks for BCRAvatar
 
-[![NPM]](https://www.npmjs.com/package/react-bcravatar) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-bcravatar.svg)](https://www.npmjs.com/package/react-bcravatar) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { contractABI, infuras, subgraphs, contracts } from './constants'
 import styles from './styles.module.css'
 
-export const constants = { contract, subgraphs }
+export const constants = { contracts, subgraphs }
 
 export function fetchAvatar(address, network, web3) {
   return new Promise((resolve, reject) =>

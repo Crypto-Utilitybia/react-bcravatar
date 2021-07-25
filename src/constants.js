@@ -6,7 +6,7 @@ export const infuras = {
 
 export const contracts = {
 	1: '',
-	4: '0x31019DDf46480F850065FeBcd07b8ad652DdeB47',
+	4: '0x6EedE8E28C581989260da2d9401de60Ae2d4AA64',
 	137: '',
 };
 
@@ -34,6 +34,6 @@ export const contractABI = [
 
 export const subgraphs = {
 	1: '',
-	4: 'https://api.studio.thegraph.com/query/2120/bcravatar-rinkeby/1.2.2',
+	4: 'https://api.studio.thegraph.com/query/2120/bcravatar-rinkeby/1.2.3',
 	137: '',
 };

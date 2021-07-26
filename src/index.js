@@ -150,7 +150,7 @@ export function useBCRAvatar({ Web3, infura, network, address, refresh }) {
   useEffect(() => {
     if (!address || !web3) return
     getAvatar(address, network, web3)
-    const timer = setInterval(() => getAvatar(address, network, web3))
+    const timer = setInterval(() => getAvatar(address, network, web3), refresh)
     return () => clearInterval(timer)
   }, [address, network, web3, refresh])
 

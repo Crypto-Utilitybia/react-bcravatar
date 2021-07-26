@@ -122,7 +122,7 @@ export function fetchAvatars(addresses, network, web3) {
   )
 }
 
-export function useBCRAvatar(Web3, infura, network, address) {
+export function useBCRAvatar({ Web3, infura, network, address, refresh }) {
   const [web3, setWeb3] = useState(null)
   const [avatar, setAvatar] = useState([null, false])
 
@@ -139,15 +139,20 @@ export function useBCRAvatar(Web3, infura, network, address) {
     }
   }, [infura, network])
 
-  useEffect(() => {
-    if (!address || !web3) return
+  const getAvatar = (address, network, web3) =>
     fetchAvatar(address, network, web3)
       .then(setAvatar)
       .catch((err) => {
         console.log('Error: Fetch Avatar', err)
         setAvatar('', false)
       })
-  }, [address, network, web3])
+
+  useEffect(() => {
+    if (!address || !web3) return
+    getAvatar(address, network, web3)
+    const timer = setInterval(() => getAvatar(address, network, web3))
+    return () => clearInterval(timer)
+  }, [address, network, web3, refresh])
 
   return avatar
 }
@@ -159,10 +164,17 @@ export function BCRAvatar({
   address,
   className = '',
   placeholder = 'https://ipfs.io/ipfs/QmVaFasJTocvnuEobz7HkRpADB82z5gYA2xuZrgYFmMoQz',
+  refresh = 15 * 1000,
   children,
   ...props
 }) {
-  const [avatar, isNFT] = useBCRAvatar(Web3, infura, network, address)
+  const [avatar, isNFT] = useBCRAvatar({
+    Web3,
+    infura,
+    network,
+    address,
+    refresh
+  })
   const classes = [
     isNFT ? 'bcravatar is-nft' : 'bcravatar',
     styles.bcravatar,

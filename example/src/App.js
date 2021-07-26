@@ -4,9 +4,8 @@ import Web3 from 'web3'
 import { useBCRProfile, BCRAvatar, fetchAvatars } from 'react-bcravatar'
 import 'react-bcravatar/dist/index.css'
 
-const web3 = new Web3(`https://rinkeby.infura.io/v3/${INFURA_ID}`)
-
 const INFURA_ID = '9aa3d95b3bc440fa88ea12eaa4456161'
+const web3 = new Web3(`https://rinkeby.infura.io/v3/${INFURA_ID}`)
 const addresses = [
   '0x23ABfdBd2535aC77ea60a078707a9e5820b0Fff2',
   '0x6EedE8E28C581989260da2d9401de60Ae2d4AA64'

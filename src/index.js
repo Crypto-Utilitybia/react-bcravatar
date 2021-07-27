@@ -129,9 +129,8 @@ export function useBCRAvatar({ Web3, infura, network, address, refresh }) {
   useEffect(() => {
     if (!infura || !contracts[network]) return
     const provider =
-      typeof infura === 'object' || !infuras[network]
-        ? infura
-        : `${infuras[network]}${infura}`
+      typeof infura === 'object' ? infura : infuras(network, infura)
+    if (!provider) return
     if (web3) {
       web3.setProvider(provider)
     } else {

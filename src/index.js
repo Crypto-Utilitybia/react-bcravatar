@@ -134,7 +134,7 @@ export function fetchAvatars(addresses, network, web3) {
   )
 }
 
-export function useBCRAvatar({ Web3, infura, network, address, refresh }) {
+export function useBCRAvatar(Web3, infura, network, address, refresh) {
   const [web3, setWeb3] = useState(null)
   const [avatar, setAvatar] = useState([null, false])
 
@@ -155,7 +155,7 @@ export function useBCRAvatar({ Web3, infura, network, address, refresh }) {
       .then(setAvatar)
       .catch((err) => {
         console.log('Error: Fetch Avatar', err)
-        setAvatar(['', false])
+        setAvatar([...avatar])
       })
 
   useEffect(() => {
@@ -178,13 +178,7 @@ export function BCRAvatar({
   children,
   ...props
 }) {
-  const [avatar, isNFT] = useBCRAvatar({
-    Web3,
-    infura,
-    network,
-    address,
-    refresh
-  })
+  const [avatar, isNFT] = useBCRAvatar(Web3, infura, network, address, refresh)
   const classes = [
     isNFT ? 'bcravatar is-nft' : 'bcravatar',
     styles.bcravatar,

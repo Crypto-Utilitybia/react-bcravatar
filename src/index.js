@@ -10,7 +10,7 @@ const replaceId = (uri, id) => {
   else return uri
 }
 
-export function fetchAvatar(address, network, web3) {
+export function fetchAvatar(address, network, web3, origin) {
   return new Promise((resolve, reject) =>
     fetch(subgraphs[network], {
       method: 'POST',
@@ -31,31 +31,35 @@ export function fetchAvatar(address, network, web3) {
       .then(({ data: { avatars } }) => avatars[0])
       .then((avatar) => {
         if (avatar) {
-          if (avatar.hasNFT) {
-            const contract = new web3.eth.Contract(
-              contractABI,
-              contracts[network]
-            )
-            Promise.all([
-              contract.methods.getAvatar(address).call(),
-              contract.methods.avatarNFTs(address).call()
-            ])
-              .then(([uri, nft]) => {
-                fetch(replaceId(uri, nft.tokenId))
-                  .then((response) => response.json())
-                  .then((metadata) => {
-                    if (metadata.image || metadata.image_url) {
-                      const uri = metadata.image || metadata.image_url
-                      resolve([uri, avatar.uri !== uri])
-                    } else {
-                      resolve([avatar.uri, false])
-                    }
-                  })
-                  .catch(() => resolve([avatar.uri, false]))
-              })
-              .catch(() => resolve([avatar.uri, false]))
+          if (avatar.uri === origin[0] && avatar.hasNFT === origin[1]) {
+            resolve(origin)
           } else {
-            resolve([avatar.uri, false])
+            if (avatar.hasNFT) {
+              const contract = new web3.eth.Contract(
+                contractABI,
+                contracts[network]
+              )
+              Promise.all([
+                contract.methods.getAvatar(address).call(),
+                contract.methods.avatarNFTs(address).call()
+              ])
+                .then(([uri, nft]) => {
+                  fetch(replaceId(uri, nft.tokenId))
+                    .then((response) => response.json())
+                    .then((metadata) => {
+                      if (metadata.image || metadata.image_url) {
+                        const uri = metadata.image || metadata.image_url
+                        resolve([uri, avatar.uri !== uri])
+                      } else {
+                        resolve([avatar.uri, false])
+                      }
+                    })
+                    .catch(reject)
+                })
+                .catch(() => resolve([avatar.uri, false]))
+            } else {
+              resolve([avatar.uri, false])
+            }
           }
         } else {
           reject({ error: 'No Avatar' })
@@ -147,7 +151,7 @@ export function useBCRAvatar({ Web3, infura, network, address, refresh }) {
   }, [infura, network])
 
   const getAvatar = (address, network, web3) =>
-    fetchAvatar(address, network, web3)
+    fetchAvatar(address, network, web3, origin)
       .then(setAvatar)
       .catch((err) => {
         console.log('Error: Fetch Avatar', err)

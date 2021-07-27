@@ -36,8 +36,8 @@ export const contractABI = [
 ]
 
 export const subgraphs = {
-  1: 'https://api.studio.thegraph.com/query/2120/bcravatar-mainnet/1.0.0',
-  4: 'https://api.studio.thegraph.com/query/2120/bcravatar-rinkeby/1.2.4',
-  56: 'https://api.studio.thegraph.com/query/2120/bcravatar-bsc/1.0.0',
-  137: 'https://api.studio.thegraph.com/query/2120/bcravatar-polygon/1.0.0'
+  1: 'https://api.studio.thegraph.com/query/2120/bcravatar-mainnet/1.0.1',
+  4: 'https://api.studio.thegraph.com/query/2120/bcravatar-rinkeby/1.2.5',
+  56: 'https://api.studio.thegraph.com/query/2120/bcravatar-bsc/1.0.1',
+  137: 'https://api.studio.thegraph.com/query/2120/bcravatar-polygon/1.0.1'
 }

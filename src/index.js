@@ -4,6 +4,12 @@ import styles from './styles.module.css'
 
 export const constants = { contracts, subgraphs }
 
+const replaceId = (uri, id) => {
+  if (uri.includes('0x{id}')) return uri.replace('0x{id}', id)
+  else if (uri.includes('{id}')) return uri.replace('{id}', id)
+  else return uri
+}
+
 export function fetchAvatar(address, network, web3) {
   return new Promise((resolve, reject) =>
     fetch(subgraphs[network], {
@@ -30,11 +36,12 @@ export function fetchAvatar(address, network, web3) {
               contractABI,
               contracts[network]
             )
-            contract.methods
-              .getAvatar(address)
-              .call()
-              .then((uri) => {
-                fetch(uri)
+            Promise.all([
+              contract.methods.getAvatar(address).call(),
+              contract.methods.avatarNFTs(address).call()
+            ])
+              .then(([uri, nft]) => {
+                fetch(replaceId(uri, nft.tokenId))
                   .then((response) => response.json())
                   .then((metadata) => {
                     if (metadata.image || metadata.image_url) {

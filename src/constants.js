@@ -32,6 +32,35 @@ export const contractABI = [
     ],
     stateMutability: 'view',
     type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address'
+      }
+    ],
+    name: 'avatarNFTs',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'nft',
+        type: 'address'
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256'
+      },
+      {
+        internalType: 'bool',
+        name: 'isERC721',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
   }
 ]
 

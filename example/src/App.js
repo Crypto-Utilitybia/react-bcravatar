@@ -51,7 +51,7 @@ const App = () => {
         ])
       )
       .catch((err) => setAvatarMap([null, err]))
-  })
+  }, [])
 
   return (
     <div>

@@ -37,7 +37,7 @@ export const contractABI = [
 
 export const subgraphs = {
   1: '',
-  4: 'https://api.studio.thegraph.com/query/2120/bcravatar-rinkeby/1.2.3',
+  4: 'https://api.studio.thegraph.com/query/2120/bcravatar-rinkeby/1.2.4',
   56: '',
   137: ''
 }

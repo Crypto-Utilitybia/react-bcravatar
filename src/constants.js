@@ -9,8 +9,8 @@ export const infuras = (network, id) =>
 export const contracts = {
   1: '',
   4: '0xD673224197Cf741365094B50b1ef1A2c99b84Cc3',
-  56: '',
-  137: ''
+  56: '0xbF8ef894fC52b423c50A8086415B9D5620FC64ce',
+  137: '0xbF8ef894fC52b423c50A8086415B9D5620FC64ce'
 }
 
 export const contractABI = [
@@ -38,6 +38,6 @@ export const contractABI = [
 export const subgraphs = {
   1: '',
   4: 'https://api.studio.thegraph.com/query/2120/bcravatar-rinkeby/1.2.4',
-  56: '',
-  137: ''
+  56: 'https://api.studio.thegraph.com/query/2120/bcravatar-bsc/1.0.0',
+  137: 'https://api.studio.thegraph.com/query/2120/bcravatar-polygon/1.0.0'
 }

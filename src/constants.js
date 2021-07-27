@@ -8,7 +8,7 @@ export const infuras = (network, id) =>
 
 export const contracts = {
   1: '',
-  4: '0x6EedE8E28C581989260da2d9401de60Ae2d4AA64',
+  4: '0xD673224197Cf741365094B50b1ef1A2c99b84Cc3',
   56: '',
   137: ''
 }

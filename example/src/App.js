@@ -8,7 +8,7 @@ const INFURA_ID = '9aa3d95b3bc440fa88ea12eaa4456161'
 const web3 = new Web3(`https://rinkeby.infura.io/v3/${INFURA_ID}`)
 const addresses = [
   '0x23ABfdBd2535aC77ea60a078707a9e5820b0Fff2',
-  '0x6EedE8E28C581989260da2d9401de60Ae2d4AA64'
+  '0xD673224197Cf741365094B50b1ef1A2c99b84Cc3'
 ]
 const shorten = (addr) => `${addr.substr(0, 6)}...${addr.substr(-4)}`
 

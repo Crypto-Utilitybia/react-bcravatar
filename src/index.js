@@ -155,12 +155,13 @@ export function useBCRAvatar(Web3, infura, network, address, refresh) {
       .then(setAvatar)
       .catch((err) => {
         console.log('Error: Fetch Avatar', err)
-        setAvatar([...avatar])
+        if (err.error === 'No Avatar') setAvatar([avatar[0], true])
+        else setAvatar([...avatar])
       })
 
   useEffect(() => {
     if (!address || !web3) return
-    const timeout = !avatar[0] ? 0 : refresh
+    const timeout = !avatar[0] && !avatar[1] ? 0.5 * 1000 : refresh
     setTimeout(() => getAvatar(address, network, web3, avatar), timeout)
   }, [address, network, web3, refresh, avatar])
 

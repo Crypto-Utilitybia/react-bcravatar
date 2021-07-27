@@ -96,11 +96,12 @@ export function fetchAvatars(addresses, network, web3) {
                       contractABI,
                       contracts[network]
                     )
-                    contract.methods
-                      .getAvatar(address)
-                      .call()
-                      .then((uri) => {
-                        fetch(uri)
+                    Promise.all([
+                      contract.methods.getAvatar(address).call(),
+                      contract.methods.avatarNFTs(address).call()
+                    ])
+                      .then(([uri, nft]) => {
+                        fetch(replaceId(uri, nft.tokenId))
                           .then((response) => response.json())
                           .then((metadata) => {
                             if (metadata.image || metadata.image_url) {

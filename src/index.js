@@ -51,7 +51,7 @@ export function fetchAvatar(address, network, web3, origin) {
                         const uri = metadata.image || metadata.image_url
                         resolve([uri, avatar.uri !== uri])
                       } else {
-                        resolve([avatar.uri, false])
+                        reject({ error: metadata.detail })
                       }
                     })
                     .catch(reject)
@@ -155,7 +155,7 @@ export function useBCRAvatar({ Web3, infura, network, address, refresh }) {
       .then(setAvatar)
       .catch((err) => {
         console.log('Error: Fetch Avatar', err)
-        setAvatar('', false)
+        // setAvatar(['', false])
       })
 
   useEffect(() => {

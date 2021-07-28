@@ -3,7 +3,7 @@ export const infuras = (network, id) =>
     1: `https://mainnet.infura.io/v3/${id}`,
     4: `https://rinkeby.infura.io/v3/${id}`,
     56: 'https://bsc-dataseed.binance.org/',
-    137: `https://polygon-mainnet.infura.io/v3/${id}`
+    137: 'https://rpc-mainnet.maticvigil.com/v1/7fa2effe8251c5c9816d77cadc1fe638ba8f8ed3'
   }[network])
 
 export const contracts = {
@@ -57,6 +57,25 @@ export const contractABI = [
         internalType: 'bool',
         name: 'isERC721',
         type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address'
+      }
+    ],
+    name: 'getProfile',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string'
       }
     ],
     stateMutability: 'view',

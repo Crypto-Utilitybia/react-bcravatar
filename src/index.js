@@ -1,8 +1,9 @@
+import 'core-js/stable'
 import React, { useState, useEffect } from 'react'
 import { contractABI, infuras, subgraphs, contracts } from './constants'
 import styles from './styles.module.css'
 
-export const constants = { contracts, subgraphs }
+export const constants = { infuras, contracts, subgraphs }
 
 const replaceId = (uri, id) => {
   if (uri.includes('0x{id}')) return uri.replace('0x{id}', id)
@@ -10,63 +11,32 @@ const replaceId = (uri, id) => {
   else return uri
 }
 
-export function fetchAvatar(address, network, web3, origin) {
-  return new Promise((resolve, reject) =>
-    fetch(subgraphs[network], {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: `{
-					avatars(where: { id: "${address.toLowerCase()}" }) {
-						id,
-						uri,
-						hasNFT
-					}
-				}`
-      })
-    })
-      .then((response) => response.json())
-      .then(({ data: { avatars } }) => avatars[0])
-      .then((avatar) => {
-        if (avatar) {
-          if (avatar.uri === origin[0] && avatar.hasNFT === origin[1]) {
-            resolve(origin)
-          } else {
-            if (avatar.hasNFT) {
-              const contract = new web3.eth.Contract(
-                contractABI,
-                contracts[network]
-              )
-              Promise.all([
-                contract.methods.getAvatar(address).call(),
-                contract.methods.avatarNFTs(address).call()
-              ])
-                .then(([uri, nft]) => {
-                  fetch(replaceId(uri, nft.tokenId))
-                    .then((response) => response.json())
-                    .then((metadata) => {
-                      if (metadata.image || metadata.image_url) {
-                        const uri = metadata.image || metadata.image_url
-                        resolve([uri, avatar.uri !== uri])
-                      } else {
-                        reject({ error: metadata.detail })
-                      }
-                    })
-                    .catch(reject)
-                })
-                .catch(() => resolve([avatar.uri, false]))
-            } else {
-              resolve([avatar.uri, false])
-            }
-          }
+export function fetchAvatar(address, network, web3, origin = ['', false]) {
+  const contract = new web3.eth.Contract(contractABI, contracts[network])
+  return new Promise((resolve) => {
+    Promise.all([
+      contract.methods.getAvatar(address).call(),
+      contract.methods.avatarNFTs(address).call()
+    ])
+      .then(([uri, nft]) => {
+        if (nft.tokenId > 0) {
+          fetch(replaceId(uri, nft.tokenId))
+            .then((response) => response.json())
+            .then((metadata) => {
+              if (metadata.image || metadata.image_url) {
+                const image_uri = metadata.image || metadata.image_url
+                resolve([image_uri, true])
+              } else {
+                resolve(origin)
+              }
+            })
+            .catch(() => resolve(origin))
         } else {
-          reject({ error: 'No Avatar' })
+          resolve([uri, false])
         }
       })
-      .catch(reject)
-  )
+      .catch(() => resolve(origin))
+  })
 }
 
 export function fetchAvatars(addresses, network, web3) {
@@ -148,13 +118,13 @@ export function useBCRAvatar(Web3, infura, network, address, refresh) {
     } else {
       setWeb3(new Web3(provider))
     }
+    setAvatar([null, false])
   }, [infura, network])
 
   const getAvatar = (address, network, web3, origin) =>
     fetchAvatar(address, network, web3, origin)
       .then(setAvatar)
       .catch((err) => {
-        console.log('Error: Fetch Avatar', err)
         if (err.error === 'No Avatar') setAvatar([avatar[0], true])
         else setAvatar([...avatar])
       })
@@ -188,7 +158,7 @@ export function BCRAvatar({
 
   return (
     <div className={classes.join(' ')} {...props}>
-      <a href='https://www.bcravatar.com' target='_blank'>
+      <a href='https://www.bcravatar.com/avatar' target='_blank'>
         <img className='bcravatar__image' src={avatar || placeholder} />
       </a>
       <div className='bcravatar__content'>{children}</div>
@@ -196,27 +166,15 @@ export function BCRAvatar({
   )
 }
 
-export function fetchProfile(address, network) {
+export function fetchProfile(network, address, web3) {
+  const contract = new web3.eth.Contract(contractABI, contracts[network])
   return new Promise((resolve, reject) =>
-    fetch(subgraphs[network], {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: `{
-					profiles (where: { id: "${address.toLowerCase()}" }) {
-						id,
-						uri
-					}
-				}`
-      })
-    })
-      .then((response) => response.json())
-      .then(({ data: { profiles } }) => profiles[0])
-      .then((profile) => {
-        if (profile) {
-          fetch(profile.uri)
+    contract.methods
+      .getProfile(address)
+      .call()
+      .then((uri) => {
+        if (uri) {
+          fetch(uri)
             .then((response) => response.json())
             .then((data) => {
               resolve([data, null])
@@ -230,15 +188,15 @@ export function fetchProfile(address, network) {
   )
 }
 
-export function useBCRProfile(network, address) {
+export function useBCRProfile(network, address, web3) {
   const [profile, setProfile] = useState([null, null])
 
   useEffect(() => {
     if (!address || !subgraphs[network]) return
-    fetchProfile(address, network)
+    fetchProfile(network, address, web3)
       .then(setProfile)
       .catch((err) => setProfile([null, err]))
-  }, [address, network])
+  }, [network, address, web3])
 
   return profile
 }

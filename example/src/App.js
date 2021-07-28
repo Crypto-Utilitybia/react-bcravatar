@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import Web3 from 'web3'
 
-import { useBCRProfile, BCRAvatar, fetchAvatars } from 'react-bcravatar'
+import {
+  useBCRProfile,
+  BCRAvatar,
+  fetchAvatars,
+  constants
+} from 'react-bcravatar'
 import 'react-bcravatar/dist/index.css'
 
 const INFURA_ID = '9aa3d95b3bc440fa88ea12eaa4456161'
-const web3 = new Web3(`https://rinkeby.infura.io/v3/${INFURA_ID}`)
 const shorten = (addr) => `${addr.substr(0, 6)}...${addr.substr(-4)}`
 
 function BCRProfileExample({
   network,
   address,
+  web3,
   className = '',
-  placeholder = 'https://ipfs.io/ipfs/QmVaFasJTocvnuEobz7HkRpADB82z5gYA2xuZrgYFmMoQz',
   ...props
 }) {
-  const [profile, error] = useBCRProfile(network, address)
+  const [profile, error] = useBCRProfile(network, address, web3)
   const loading = !profile && !error
   const classes = [error ? 'bcrprofile error' : 'bcrprofile', className]
 
@@ -69,9 +73,11 @@ const addresses = {
 }
 
 const App = () => {
+  const [web3, setWeb3] = useState(null)
   const [network, setNetwork] = useState(networks[0].key)
   const [[avatarMap, error], setAvatarMap] = useState([null, null])
   useEffect(() => {
+    const web3 = new Web3(constants.infuras(network, INFURA_ID))
     fetchAvatars(addresses[network], network, web3)
       .then((avatars) =>
         setAvatarMap([
@@ -86,6 +92,7 @@ const App = () => {
         ])
       )
       .catch((err) => setAvatarMap([null, err]))
+    setWeb3(web3)
   }, [network])
 
   return (
@@ -97,6 +104,7 @@ const App = () => {
           infura={INFURA_ID}
           network={network}
           address={addresses[network][0]}
+          placeholder={'/avataaars.png'}
         >
           {shorten(addresses[network][0])}
         </BCRAvatar>
@@ -111,11 +119,14 @@ const App = () => {
           </option>
         ))}
       </select>
-      <BCRProfileExample
-        infura={INFURA_ID}
-        network={network}
-        address={addresses[network][0]}
-      />
+      {web3 && (
+        <BCRProfileExample
+          web3={web3}
+          infura={INFURA_ID}
+          network={network}
+          address={addresses[network][0]}
+        />
+      )}
       <pre className='bcrprofile'>
         {!(avatarMap || error)
           ? 'Loading...'
